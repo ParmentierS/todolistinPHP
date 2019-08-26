@@ -1,0 +1,18 @@
+[
+    {
+        "aim":"Respirer",
+        "done":true
+    },
+    {
+        "aim":"Manger",
+        "done":true
+    },
+    {
+        "aim":"Boire",
+        "done":false
+    },
+    {
+        "aim":"Dormir",
+        "done":false
+    }
+]
