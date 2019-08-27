@@ -40,7 +40,7 @@ try
     /*foreach ($_POST as $key => $value) {
         echo " cle : $key -> value : $value ";
     }*/
-    if($_POST["list-item"])
+    if($_POST && $_POST["list-item"])
     {
         echo "defini";
         $sanitized_item = sanitize($_POST["list-item"]);

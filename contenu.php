@@ -15,59 +15,10 @@ ini_set('display_errors', 1);
 try
 {
     
-    if($_POST["list-item"])
-    {
-        echo "defini";
-        $sanitized_item = sanitize($_POST["list-item"]);
-        echo "<br>";
-        echo $sanitized_item;
-        /*$fp = fopen("todo.json","r");
-        $i=0;
-        while(!feof($fp)) 
-        { 
-            $i++;
-            $fichier_texte=fgets($fp,1024);
-            echo "$fichier_texte"; 
-            echo "<br> $i";
-        } 
-        fclose($fp);
-        */
-        $json = file_get_contents('todo.json');
-
-        //Decode JSON
-        $json_data = json_decode($json,true);
-
-        //Print data
-        print_r($json_data);
-
-        $new_data = new stdClass;
-        $new_data-> aim = $sanitized_item;
-        $new_data-> done = false;
-        array_push($json_data, $new_data);
-
-        $new_json = json_encode($json_data, JSON_PRETTY_PRINT);
-
-        //write json data into data.json file
-       if(file_put_contents('todo.json', $new_json)) 
-        {
-            echo 'Data successfully saved';
-        }
-        else 
-            echo "error";
-
-
-
-         
-    }
-    else
-    {
-        echo "pas defini";
-    }
-
-//function to sanitize the data (to strip it from SQL syntax, javascript code and html tags)
-
-
-
+    $json = file_get_contents('todo.json');
+    //Decode JSON
+    $json_data = json_decode($json,true);
+    $size = count($json_data);
 
 
 }
@@ -78,27 +29,47 @@ catch(Exception $e)
 
 ?>
     <h3>A Faire</h3>
-    <section>
-        <?php 
+    <section id="thingstodo">
+        <ul>
+            <?php 
                 for($i=0;$i<$size;$i++)
                 {
-                    if(! $json_data[$i]->done)
+                    if(! $json_data[$i]["done"])
                     {
+                        $aim = $json_data[$i]["aim"];
+                        echo '<li>';
                         echo '<input type="checkbox" id="scales" name="scales"
-                    checked>';
-                    echo  '<label for="scales">Scales</label>';
+                        >';
+                        echo  '<label for="scales">';
+                        echo $aim;
+                        echo '</label>';
+                        echo '</li>';
                     }
-                    
-
                 }
-        
- 
-        ?>
+            ?>
+        </ul>
+        <button class="btn" id="add-item" type="submit" name="submit">Enregistrer</button>
     </section>
     <h3>Archive</h3>
-    <section>
-        <h5>la tâche à effectuer</h5>
-        <input type="textarea" id="list-item" name="list-item" placeholder="<o/ Entrez votre tâche \o>" class="form-control validate">
-        <button class="btn" id="add-item" type="submit" name="submit">Ajouter</button>
+    <section id="thingsdone">
+        <ul>
+        <?php 
+            for($i=0;$i<$size;$i++)
+            {
+                if($json_data[$i]["done"])
+                {
+                    $aim = $json_data[$i]["aim"];
+                    echo '<li>';
+                    echo '<input type="checkbox" id="scales" name="scales"
+                    >';
+                    echo  '<label for="scales">';
+                    echo $aim;
+                    echo '</label>';
+                    echo '</li>';
+                }
+            }
+        ?>
+        </ul>
     </section>
+    <script src="save.js"></script>
 </body>
