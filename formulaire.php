@@ -10,7 +10,7 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/finalLoginForm.css">
-    <title>Ajouter une tache</title>
+    <title>Ajouter une tâche</title>
 </head>
 <body>
 <?php
@@ -68,13 +68,24 @@ try
         //Print data
         print_r($json_data);
 
-        $new_data =
-        {
-            aim : $sanitized_item,
-            done : false
-        }
+        $new_data = new stdClass;
+        $new_data-> aim = $sanitized_item;
+        $new_data-> done = false;
+        array_push($json_data, $new_data);
 
-        $json_data 
+        $new_json = json_encode($json_data, JSON_PRETTY_PRINT);
+
+        //write json data into data.json file
+       if(file_put_contents('todo.json', $new_json)) 
+        {
+            echo 'Data successfully saved';
+        }
+        else 
+            echo "error";
+
+
+
+         
     }
     else
     {
@@ -96,8 +107,8 @@ catch(Exception $e)
 ?>
     <h1>Ajouter une tache</h1>
     <form class="sending-form" method="POST">
-        <input type="text" id="list-item" name="list-item" placeholder="<o/ Entrez votre tâche \o>" class="form-control validate">
+        <h5>la tâche à effectuer</h5>
+        <input type="textarea" id="list-item" name="list-item" placeholder="<o/ Entrez votre tâche \o>" class="form-control validate">
         <button class="btn" id="add-item" type="submit" name="submit">Ajouter</button>
     </form>
-    <script src="save.js"></script>
 </body>
