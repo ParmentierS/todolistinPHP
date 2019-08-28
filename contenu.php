@@ -53,22 +53,22 @@ catch(Exception $e)
     <h3>Archive</h3>
     <section id="thingsdone">
         <ul>
-        <?php 
-            for($i=0;$i<$size;$i++)
-            {
-                if($json_data[$i]["done"])
+            <?php 
+                for($i=0;$i<$size;$i++)
                 {
-                    $aim = $json_data[$i]["aim"];
-                    echo '<li>';
-                    echo '<input type="checkbox" id="scales" name="scales"
-                    >';
-                    echo  '<label for="scales">';
-                    echo $aim;
-                    echo '</label>';
-                    echo '</li>';
+                    if($json_data[$i]["done"])
+                    {
+                        $aim = $json_data[$i]["aim"];
+                        echo '<li>';
+                        echo '<input type="checkbox" id="scales" name="scales"
+                        checked >';
+                        echo  '<label for="scales">';
+                        echo $aim;
+                        echo '</label>';
+                        echo '</li>';
+                    }
                 }
-            }
-        ?>
+            ?>
         </ul>
     </section>
     <script src="save.js"></script>
